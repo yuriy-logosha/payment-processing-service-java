@@ -1,0 +1,20 @@
+plugins {
+	id 'java'
+}
+
+subprojects {
+
+    group = 'com.company.payment-processing'
+    version = '0.0.1-SNAPSHOT'
+
+    apply plugin: 'java'
+
+    sourceSets.main.java.srcDirs = ['src/main/java']
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        jcenter()
+    }
+}

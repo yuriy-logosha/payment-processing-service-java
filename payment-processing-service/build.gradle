@@ -1,0 +1,42 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.2.RELEASE'
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+dependencies {
+    implementation project(':payment-common')
+    compile 'javax.persistence:javax.persistence-api'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.data:spring-data-commons'
+
+    implementation 'javax.transaction:javax.transaction-api'
+    implementation group: 'com.h2database', name: 'h2', version: '1.0.60'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'junit' // excluding junit 4
+    }
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.0.1'
+    testImplementation 'org.mockito:mockito-junit-jupiter:2.23.0'
+    testImplementation 'com.tngtech.archunit:archunit:0.9.3'
+    testImplementation 'org.junit.platform:junit-platform-launcher:1.4.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:2.2.2.RELEASE")
+        mavenBom("javax.persistence:javax.persistence-api:2.2")
+    }
+}
