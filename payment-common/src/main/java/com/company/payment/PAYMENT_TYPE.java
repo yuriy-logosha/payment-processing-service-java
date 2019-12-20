@@ -10,12 +10,16 @@ public enum PAYMENT_TYPE {
     }
 
     public static PAYMENT_TYPE getType(final Payment p) {
-        if (p.getBic() != null && !p.getBic().isEmpty()) {
-            return TYPE3;
-        } else if (p.getCurrency() != null && CURRENCY.USD.equals(CURRENCY.valueOf(p.getCurrency()))) {
-            return TYPE2;
-        } else if (p.getCurrency() != null && CURRENCY.EUR.equals(CURRENCY.valueOf(p.getCurrency())) && p.getDetails() != null && !p.getDetails().isEmpty()) {
-            return TYPE1;
-        } else return null;
+        try {
+            if (p.getBic() != null && !p.getBic().isEmpty()) {
+                return TYPE3;
+            } else if (p.getCurrency() != null && CURRENCY.USD.equals(CURRENCY.valueOf(p.getCurrency()))) {
+                return TYPE2;
+            } else if (p.getCurrency() != null && CURRENCY.EUR.equals(CURRENCY.valueOf(p.getCurrency())) && p.getDetails() != null && !p.getDetails().isEmpty()) {
+                return TYPE1;
+            } else return null;
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 }

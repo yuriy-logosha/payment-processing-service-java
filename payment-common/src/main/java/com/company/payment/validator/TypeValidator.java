@@ -33,9 +33,9 @@ public class TypeValidator implements ConstraintValidator<ValidateType, Object> 
             if(!valid) {
                 context.disableDefaultConstraintViolation();
                 context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
-                log.error("Not valid type: " + payment);
+                log.error(message + " " + payment);
             }
-        } catch (IllegalArgumentException | ClassCastException e) {
+        } catch (RuntimeException e) {
             log.error("Error while validating payment.", e);
             return false;
         }

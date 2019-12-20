@@ -9,16 +9,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
-import java.sql.Timestamp;
+import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(isolation = Isolation.READ_COMMITTED)
 public class PaymentService {
     private static final Logger log = LoggerFactory.getLogger(PaymentService.class);
 
@@ -45,12 +46,12 @@ public class PaymentService {
         repository.deleteAll();
     }
 
-    public Payment findById(Long id) {
+    public Payment findById(@Positive Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new PaymentNotFoundException(id));
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(@Positive Long id) {
         repository.deleteById(id);
     }
 
@@ -78,7 +79,7 @@ public class PaymentService {
         if (type == null) {
             //TODO: Wrong payment type and exception should be thrown.
         }
-        long hours_spent = LocalDateTime.from( p.getCancellation_date() ).until( p.getCreation_date(), ChronoUnit.HOURS);
+        long hours_spent = LocalDateTime.from( p.getCreation_date() ).until( p.getCancellation_date(), ChronoUnit.HOURS);
 
         p.setCancellation_fee(hours_spent * (type.equals(PAYMENT_TYPE.TYPE1) ?
                 type1Rate :
