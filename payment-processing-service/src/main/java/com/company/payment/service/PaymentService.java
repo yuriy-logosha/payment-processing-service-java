@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -57,29 +58,29 @@ public class PaymentService {
         return repository.save(newPayment);
     }
 
-    public Payment updateCreationDate(Long id, @Valid java.util.Date creation_date) {
+    public Payment updateCreationDate(Long id, @Valid LocalDateTime creation_date) {
         return repository.findById(id)
-                .map(p -> {p.setCreation_date(new Timestamp(creation_date.getTime())); return save(p);})
+                .map(p -> {p.setCreation_date(creation_date); return save(p);})
                 .orElseThrow(() -> new PaymentNotFoundException(id));
     }
 
     public Payment cancelPayment(Long id) {
         return repository.findById(id)
-                .filter(p -> p.getCreation_date().toLocalDateTime().isAfter(LocalDateTime.now().toLocalDate().atStartOfDay()))
+                .filter(p -> p.getCreation_date().isAfter(LocalDateTime.now().toLocalDate().atStartOfDay()))
                 .map(this::cancelPayment)
                 .orElseThrow(() -> new PaymentCanNotBeCancelledException(id));
     }
 
     private Payment cancelPayment(final Payment p) {
-        p.setCancellation_date(Timestamp.valueOf(LocalDateTime.now()));
+        p.setCancellation_date(LocalDateTime.now());
 
         PAYMENT_TYPE type = PAYMENT_TYPE.getType(p);
         if (type == null) {
             //TODO: Wrong payment type and exception should be thrown.
         }
-        long hours_spent = p.getCreation_date().getTime() - Timestamp.valueOf(LocalDateTime.now()).getTime();
+        long hours_spent = LocalDateTime.from( p.getCancellation_date() ).until( p.getCreation_date(), ChronoUnit.HOURS);
 
-        p.setCancellation_fee(hours_spent / (60 * 60 * 1000) * (type.equals(PAYMENT_TYPE.TYPE1) ?
+        p.setCancellation_fee(hours_spent * (type.equals(PAYMENT_TYPE.TYPE1) ?
                 type1Rate :
                 type.equals(PAYMENT_TYPE.TYPE2) ?
                         type2Rate : type3Rate));

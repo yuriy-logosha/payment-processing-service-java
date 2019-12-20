@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -52,7 +53,7 @@ public class PaymentController {
 
     //TODO: Should be removed. Created only for testing needs.
     @PatchMapping("/payments/{id}")
-    Payment updatePayment(@PathVariable Long id, @RequestParam @DateTimeFormat(pattern="dd.MM.yyyy'T'HH:mm:ss.SSSXXX") java.util.Date creation_date) {
+    Payment updatePayment(@PathVariable Long id, @RequestParam @DateTimeFormat(pattern="dd.MM.yyyy'T'HH:mm:ss.SSSXXX") LocalDateTime creation_date) {
         return service.updateCreationDate(id, creation_date);
     }
 

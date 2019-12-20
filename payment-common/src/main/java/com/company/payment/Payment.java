@@ -11,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -44,9 +45,9 @@ public class Payment {
 
     @CreatedDate
     @Column(name = "creation_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable=false)
-    private Timestamp creation_date;
+    private LocalDateTime creation_date;
 
-    private Timestamp cancellation_date;
+    private LocalDateTime cancellation_date;
 
     private Double cancellation_fee;
 
