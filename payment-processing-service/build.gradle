@@ -19,6 +19,7 @@ dependencies {
 
     implementation 'javax.transaction:javax.transaction-api'
     implementation group: 'com.h2database', name: 'h2', version: '1.0.60'
+    implementation 'org.postgresql:postgresql'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'junit' // excluding junit 4

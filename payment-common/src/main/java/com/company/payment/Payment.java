@@ -10,7 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity

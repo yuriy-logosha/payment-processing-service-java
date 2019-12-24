@@ -56,7 +56,7 @@ public class PaymentService {
     }
 
     public Payment save(@Valid Payment newPayment) {
-        return repository.save(newPayment);
+        return repository.saveAndFlush(newPayment);
     }
 
     public Payment updateCreationDate(Long id, @Valid LocalDateTime creation_date) {

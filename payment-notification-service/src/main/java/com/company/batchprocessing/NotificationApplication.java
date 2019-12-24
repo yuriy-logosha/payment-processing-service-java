@@ -4,9 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BatchProcessingApplication {
-
+public class NotificationApplication {
 	public static void main(String[] args) throws Exception {
-		SpringApplication.run(BatchProcessingApplication.class, args);
+		SpringApplication.run(NotificationApplication.class, args);
 	}
 }

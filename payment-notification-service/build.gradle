@@ -8,7 +8,8 @@ apply plugin: 'io.spring.dependency-management'
 dependencies {
 	implementation project(':payment-common')
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
-	runtimeOnly 'org.hsqldb:hsqldb'
+	runtimeOnly 'com.h2database:h2:1.0.60'
+	implementation 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.batch:spring-batch-test'
 }
