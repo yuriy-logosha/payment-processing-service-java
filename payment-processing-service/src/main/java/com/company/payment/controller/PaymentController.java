@@ -17,51 +17,51 @@ import java.util.List;
 @Validated
 public class PaymentController {
 
-    private final PaymentService service;
+    private final PaymentService paymentService;
 
     public PaymentController(PaymentService service) {
-        this.service = service;
+        this.paymentService = service;
     }
 
     @GetMapping("/payments")
     @ResponseStatus(HttpStatus.OK)
     List<Payment> all() {
-        return service.findAll();
+        return paymentService.findAll();
     }
 
     @DeleteMapping("/payments")
     void delete() {
-        service.deleteAll();
+        paymentService.deleteAll();
     }
 
     @DeleteMapping("/payments/{id}")
     void deleteOne(@PathVariable Long id) {
-        service.deleteById(id);
+        paymentService.deleteById(id);
     }
 
     @PostMapping("/payments")
     @ResponseStatus(HttpStatus.CREATED)
     Payment newPayment(@Valid @RequestBody Payment newPayment) {
-        return service.save(newPayment);
+        return paymentService.save(newPayment);
     }
 
     @GetMapping("/payments/{id}")
     @ResponseStatus(HttpStatus.OK)
     Payment one(@PathVariable Long id) {
-        return service.findById(id);
+        return paymentService.findById(id);
     }
 
     //TODO: Should be removed. Created only for testing needs.
     @PatchMapping("/payments/{id}")
     Payment updatePayment(@PathVariable Long id, @RequestParam @DateTimeFormat(pattern="dd.MM.yyyy'T'HH:mm:ss.SSSXXX") LocalDateTime creation_date) {
-        return service.updateCreationDate(id, creation_date);
+        return paymentService.updateCreationDate(id, creation_date);
     }
 
     @PatchMapping("/payments/{id}/cancel")
     @ResponseStatus(HttpStatus.OK)
     Payment cancelPayment(@PathVariable Long id) {
         try {
-            return service.cancelPayment(id);
+            return paymentService.cancelPayment(id);
         } catch (PaymentCanNotBeCancelledException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage(), e);
         }
