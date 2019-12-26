@@ -4,7 +4,9 @@ import com.company.payment.PAYMENT_TYPE;
 import com.company.payment.Payment;
 import com.company.payment.exception.PaymentCanNotBeCancelledException;
 import com.company.payment.exception.PaymentNotFoundException;
+import com.company.payment.exception.WrongPaymentTypeException;
 import com.company.payment.repository.PaymentRepository;
+import com.company.payment.specification.PaymentSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +41,7 @@ public class PaymentService {
     }
 
     public List<Payment> findAll() {
-        return repository.findAll();
+        return repository.findAll(new PaymentSpecification());
     }
 
     public void deleteAll() {
@@ -77,7 +79,7 @@ public class PaymentService {
 
         PAYMENT_TYPE type = PAYMENT_TYPE.getType(p);
         if (type == null) {
-            //TODO: Wrong payment type and exception should be thrown.
+            throw new WrongPaymentTypeException();
         }
         long hours_spent = LocalDateTime.from( p.getCreation_date() ).until( p.getCancellation_date(), ChronoUnit.HOURS);
 
