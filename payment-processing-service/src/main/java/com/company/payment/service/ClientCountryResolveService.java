@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.ServletRequest;
@@ -38,8 +39,13 @@ public class ClientCountryResolveService {
         if (StringUtils.isEmpty(ip)) {
             return;
         }
-        final String result = restTemplate.getForObject(ipResolverHost + ip + ACCESS_KEY + ipResolverAccessKey, String.class);
-        log.info(result);
+        try {
+            final String result = restTemplate.getForObject(ipResolverHost + ip + ACCESS_KEY + ipResolverAccessKey, String.class);
+            log.info(result);
+        } catch (RestClientException e) {
+            log.error("Error getting clients` country by IP.", e.getLocalizedMessage());
+        }
+
     }
 
     public String extractIP(ServletRequest request) {

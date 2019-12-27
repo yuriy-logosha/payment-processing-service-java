@@ -9,4 +9,6 @@ dependencies {
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
     compile group: 'org.springframework', name: 'spring-core', version: '5.2.2.RELEASE'
     compile group: 'org.springframework.data', name: 'spring-data-commons-core', version: '1.4.1.RELEASE'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.1'
+
 }

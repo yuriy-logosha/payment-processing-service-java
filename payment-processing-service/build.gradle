@@ -8,6 +8,7 @@ apply plugin: 'io.spring.dependency-management'
 dependencies {
     implementation project(':payment-common')
     compile 'javax.persistence:javax.persistence-api'
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.1")
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

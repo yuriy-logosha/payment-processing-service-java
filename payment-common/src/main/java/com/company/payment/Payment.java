@@ -2,9 +2,9 @@ package com.company.payment;
 
 
 import com.company.payment.validator.ValidateType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -42,7 +42,7 @@ public class Payment {
 
     private String bic;
 
-    @CreatedDate
+    @JsonFormat(pattern="dd.MM.yyyy'T'HH:mm:ss.SSS")
     @Column(name = "creation_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable=false)
     private LocalDateTime creation_date;
 

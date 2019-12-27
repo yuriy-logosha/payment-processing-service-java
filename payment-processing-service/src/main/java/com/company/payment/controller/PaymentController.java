@@ -53,7 +53,7 @@ public class PaymentController {
 
     //TODO: Should be removed. Created only for testing needs.
     @PatchMapping("/payments/{id}")
-    Payment updatePayment(@PathVariable Long id, @RequestParam @DateTimeFormat(pattern="dd.MM.yyyy'T'HH:mm:ss.SSSXXX") LocalDateTime creation_date) {
+    Payment updatePayment(@PathVariable Long id, @RequestParam @DateTimeFormat(pattern="dd.MM.yyyy'T'HH:mm:ss.SSS") LocalDateTime creation_date) {
         return paymentService.updateCreationDate(id, creation_date);
     }
 
